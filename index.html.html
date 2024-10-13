@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Assignment 3</title>
+</head>
+<body>
+    <div>
+        <button onclick="startGame()">START</button>
+        <img id="img" src="PacMan1.png" alt="" style="display: none;">
+    </div>
+    <style>
+        img {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            top: 100px;
+            left: 50px;
+        }
+    </style>
+
+    <script>
+        var imagesRight = ['PacMan1.png', 'PacMan2.png'];
+        var imagesLeft = ['PacMan3.png', 'PacMan4.png'];
+        
+        let currentIndex = 0;
+        var imageElement = document.getElementById('img');
+        var currentImages = imagesRight;
+        var isGameStarted = false;
+
+        setInterval(imgMove, 200);
+
+        function imgMove() {
+            if (isGameStarted) {
+                imageElement.src = currentImages[currentIndex];
+                currentIndex = (currentIndex + 1) % currentImages.length;
+            }
+        }
+
+        var pos = 0;
+        var vel = 5;
+
+        function move() {
+            if (isGameStarted) {
+                pos = pos + vel;
+                if (pos > window.innerWidth - imageElement.width || pos < 0) {
+                    vel = -vel;
+                    currentImages = vel > 0 ? imagesRight : imagesLeft;
+                }
+                imageElement.style.left = pos + 'px';
+            }
+        }
+
+        setInterval(move, 20);
+
+        function startGame() {
+            isGameStarted = true;
+            imageElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
